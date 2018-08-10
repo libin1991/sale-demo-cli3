@@ -26,12 +26,12 @@ export default {
       isFix: false,
       headerHeight: 0,
       scrollTop: 0,
-      scrollHeight: 0,
-      switchBarHeight: 0,
+      // scrollHeight: 0,
+      // switchBarHeight: 0,
       throttleScroll: null
     };
   },
-  computed: {
+  /* computed: {
     contentMinHeight() {
       const windowHeight = document.documentElement.clientHeight;
       return this.isFix ? windowHeight - this.switchBarHeight : windowHeight - this.headerHeight - this.switchBarHeight;
@@ -39,7 +39,7 @@ export default {
     contentMarginTop() {
       return this.isFix ? this.switchBarHeight : 0;
     }
-  },
+  }, */
   created() {
     axios.get('/api/seller').then((response) => {
       // console.log(response);
@@ -52,25 +52,37 @@ export default {
   methods: {
     handleScroll() {
       this.setData();
+      // console.log('scrolling');
+
       // 判断是否吸顶效果
-      console.log(this.scrollTop);
-      if (this.scrollTop >= this.headerHeight) {
-        this.isFix = true;
-      } else {
-        this.isFix = false;
+      // console.log(this.scrollTop);
+      if (!this.isFix) {
+        if (this.scrollTop >= this.headerHeight) {
+          this.isFix = true;
+        } else {
+          this.isFix = false;
+        }
       }
     },
     setData() {
       this.headerHeight = this.$el.querySelector('.header').clientHeight;
-      this.switchBarHeight = this.$el.querySelector('.goods').clientHeight;
+      // this.switchBarHeight = this.$el.querySelector('.goods').clientHeight;
       this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-      this.scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      // this.scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
     }
   },
   mounted() {
     this.$nextTick(() => {
       // 节流监听滚动事件
+      let that = this;
       window.addEventListener('scroll', this.throttleScroll, false);
+      // if (this.isFix) {
+      window.addEventListener('click', function() {
+        console.log('click');
+        that.isFix = false;
+        console.log(that.isFix);
+      });
+      // }
     });
     this.throttleScroll = _.throttle(this.handleScroll, 100);
   },

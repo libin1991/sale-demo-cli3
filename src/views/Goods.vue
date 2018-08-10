@@ -52,7 +52,6 @@ export default {
       goods: [],
       listHeight: [],
       scrollY: 0
-      // selectedFood: {}
     };
   },
   computed: {
@@ -111,9 +110,9 @@ export default {
 
   .goods {
     display: flex;
-    position: fixed;
-    top: 174px;
-    bottom: 46px;
+    position: relative;
+    // top: 174px;
+    // bottom: 46px;
     width: 100%;
     overflow: auto;
     .menu-wrapper {
